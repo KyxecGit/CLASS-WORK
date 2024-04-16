@@ -100,6 +100,24 @@ class Mapmanager():
        while not self.isEmpty((x, y, z)):
            z += 1
        return (x, y, z)
+   
+
+   def buildBlock(self, pos):
+       x, y , z = pos
+       new = self.findHighestEmpty(pos)
+       if new[2] <= z + 1:
+           self.addBlock(new)
+
+   def delBlock(self, pos):
+       blocks = self.findBlocks(pos)
+       for block in blocks:
+           block.removeNode()
+
+   def delBlockFrom(self, pos):
+       x, y , z = self.findHighestEmpty(pos)
+       pos = x, y, z - 1
+       for block in self.findBlocks(pos):
+           block.removeNode()
 
 Файл hero.py
 
@@ -287,6 +305,23 @@ class Hero():
    def down(self):
        if self.mode and self.hero.getZ() > 1:
            self.hero.setZ(self.hero.getZ() - 1)
+
+   def build(self):
+       angle = self.hero.getH() % 360
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.addBlock(pos)
+       else:
+           self.land.buildBlock(pos)
+
+   def destroy(self):
+       angle = self.hero.getH() % 360
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.delBlock(pos)
+       else:
+           self.land.delBlockFrom(pos)
+       
   
 
    def accept_events(self):
@@ -305,14 +340,14 @@ class Hero():
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
 
-
        base.accept(key_switch_camera, self.changeView)
-
-
        base.accept(key_switch_mode, self.changeMode)
-
 
        base.accept(key_up, self.up)
        base.accept(key_up + '-repeat', self.up)
        base.accept(key_down, self.down)
        base.accept(key_down + '-repeat', self.down)
+
+       base.accept(key_build, self.build)
+       base.accept(key_destroy, self.destroy)
+

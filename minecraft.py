@@ -1,6 +1,7 @@
 Файл game.py
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
+from hero import Hero
 
 
 class Game(ShowBase):

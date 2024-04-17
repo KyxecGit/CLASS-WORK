@@ -10,8 +10,20 @@ class GameSprite(sprite.Sprite):
     def view(self):
         window.blit(self.img,(self.hit_box.x,self.hit_box.y))
 
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_LEFT]:
+            self.hit_box.x -= 10
+        if keys[K_RIGHT]:
+            self.hit_box.x += 10
+        if keys[K_UP]:
+            self.hit_box.y -= 10
+        if keys[K_DOWN]:
+            self.hit_box.y += 10
+
 #Персонажи
-hero = GameSprite(300,200,'gitler.png')
+hero = Player(300,200,'gitler.png')
 #Создаем окно
 window = display.set_mode((700,500))
 display.set_caption('Догонялки')
@@ -22,7 +34,8 @@ back = transform.scale(img,(700,500))
 mixer.init()
 mixer.music.load('music.mp3')
 mixer.music.play()
-
+#Таймер
+clock = time.Clock()
 #Игровой цикл
 game = True
 while game:
@@ -33,4 +46,7 @@ while game:
 
     window.blit(back,(0,0))    
     hero.view()
+    hero.move()
+
+    clock.tick(30)
     display.update() 

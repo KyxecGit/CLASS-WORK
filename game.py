@@ -22,8 +22,22 @@ class Player(GameSprite):
         if keys[K_DOWN]:
             self.hit_box.y += 10
 
+class Enemy(GameSprite):
+    def move(self):
+        napravlenie = 'pravo'
+        if self.hit_box.x <= 500:
+            napravlenie = 'pravo'
+        if self.hit_box.x >= 400:
+            napravlenie = 'levo'
+
+        if napravlenie == 'levo':
+            self.hit_box.x -= 10
+        else:
+            self.hit_box.x += 10
+
 #Персонажи
 hero = Player(300,200,'gitler.png')
+enemy = Enemy(0,200,'stalin.png')
 #Создаем окно
 window = display.set_mode((700,500))
 display.set_caption('Догонялки')
@@ -44,9 +58,13 @@ while game:
         if e.type == QUIT:
             game = False
 
-    window.blit(back,(0,0))    
+    window.blit(back,(0,0)) 
+
     hero.view()
     hero.move()
+
+    enemy.view()
+    enemy.move()
 
     clock.tick(30)
     display.update() 

@@ -1,7 +1,9 @@
+import os
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QPushButton, QListWidget,
-    QHBoxLayout, QVBoxLayout
+    QHBoxLayout, QVBoxLayout,
+    QFileDialog
 )
 
 app = QApplication([])
@@ -35,6 +37,17 @@ line_editor.addWidget(btn_gray)
 main_layout.addLayout(line_files)
 main_layout.addLayout(line_image)
 line_image.addLayout(line_editor)
+#ФУНКЦИОНАЛ
+def show_file():
+    workdir = QFileDialog.getExistingDirectory()
+    files = os.listdir(workdir)
+    list_files.clear()
+    for file in files:
+        for ext in ['.jpg','.png']:
+            if file.endswith(ext):
+                list_files.addItem(file)
+#ПОДПИСКИ
+btn_folder.clicked.connect(show_file)
 #ЗАПУСК ПРИЛОЖЕНИЯ
 win.setLayout(main_layout)
 win.show()

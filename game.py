@@ -43,6 +43,19 @@ class Enemy(GameSprite):
             self.rect.x -= self.speed
         else:
             self.rect.x += self.speed
+
+class Wall(sprite.Sprite):
+    def __init__(self,wall_x,wall_y,wall_width,wall_height):
+        self.width = wall_width
+        self.height = wall_height
+        self.wall = Surface((self.width,self.height))
+        self.wall.fill((0,255,0))
+        self.rect = self.wall.get_rect()
+        self.rect.x = wall_x
+        self.rect.y = wall_y
+
+    def reset(self):
+        window.blit(self.wall, (self.rect.x, self.rect.y))
         
 #Игровая сцена:
 win_width = 700
@@ -55,6 +68,9 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 player = Player('hero.png', 5, win_height - 80, 4)
 monster = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+
+wall_1 = Wall(0,0, 400, 20)
+wall_2 = Wall(0,0, 20, 400)
 
 game = True
 clock = time.Clock()
@@ -77,6 +93,9 @@ while game:
 
     monster.reset()
     monster.move()
+
+    wall_1.reset()
+    wall_2.reset()
 
     display.update()
     clock.tick(FPS)

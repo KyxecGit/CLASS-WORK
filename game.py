@@ -1,70 +1,59 @@
 from pygame import *
+'''Необходимые классы'''
 
+
+#класс-родитель для спрайтов
 class GameSprite(sprite.Sprite):
-    def __init__(self,x,y,img):
-        self.img = transform.scale(image.load(img),(70,70))
-        self.hit_box = self.img.get_rect()
-        self.hit_box.x = x
-        self.hit_box.y = y
+   #конструктор класса
+   def __init__(self, player_image, player_x, player_y, player_speed):
+       super().__init__()
+       # каждый спрайт должен хранить свойство image - изображение
+       self.image = transform.scale(image.load(player_image), (65, 65))
+       self.speed = player_speed
+       # каждый спрайт должен хранить свойство rect - прямоугольник, в который он вписан
+       self.rect = self.image.get_rect()
+       self.rect.x = player_x
+       self.rect.y = player_y
 
-    def view(self):
-        window.blit(self.img,(self.hit_box.x,self.hit_box.y))
 
-class Player(GameSprite):
-    def move(self):
-        keys = key.get_pressed()
-        if keys[K_LEFT]:
-            self.hit_box.x -= 10
-        if keys[K_RIGHT]:
-            self.hit_box.x += 10
-        if keys[K_UP]:
-            self.hit_box.y -= 10
-        if keys[K_DOWN]:
-            self.hit_box.y += 10
+   def reset(self):
+       window.blit(self.image, (self.rect.x, self.rect.y))
 
-class Enemy(GameSprite):
-    def move(self):
-        napravlenie = 'pravo'
-        if self.hit_box.x <= 500:
-            napravlenie = 'pravo'
-        if self.hit_box.x >= 400:
-            napravlenie = 'levo'
 
-        if napravlenie == 'levo':
-            self.hit_box.x -= 10
-        else:
-            self.hit_box.x += 10
+#Игровая сцена:
+win_width = 700
+win_height = 500
+window = display.set_mode((win_width, win_height))
+display.set_caption("Maze")
+background = transform.scale(image.load("background.jpg"), (win_width, win_height))
 
-#Персонажи
-hero = Player(300,200,'gitler.png')
-enemy = Enemy(0,200,'stalin.png')
-#Создаем окно
-window = display.set_mode((700,500))
-display.set_caption('Догонялки')
-#Фон
-img = image.load('back.jpg')
-back = transform.scale(img,(700,500))
-#Музыка
-mixer.init()
-mixer.music.load('music.mp3')
-mixer.music.play()
-#Таймер
-clock = time.Clock()
-#Игровой цикл
+
+#Персонажи игры:
+player = GameSprite('hero.png', 5, win_height - 80, 4)
+monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
+final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+
+
 game = True
+clock = time.Clock()
+FPS = 60
+
+
+#музыка
+mixer.init()
+mixer.music.load('jungles.ogg')
+mixer.music.play()
+
+
 while game:
+   for e in event.get():
+       if e.type == QUIT:
+           game = False
+  
+   window.blit(background,(0, 0))
+   player.reset()
+   monster.reset()
 
-    for e in event.get():
-        if e.type == QUIT:
-            game = False
 
-    window.blit(back,(0,0)) 
-
-    hero.view()
-    hero.move()
-
-    enemy.view()
-    enemy.move()
-
-    clock.tick(30)
-    display.update() 
+   display.update()
+   clock.tick(FPS)

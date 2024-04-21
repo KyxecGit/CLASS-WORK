@@ -32,8 +32,9 @@ class Player(GameSprite):
             self.rect.x += self.speed
 
 class Enemy(GameSprite):
-    direction = 'left'
-    def move(self):
+    
+    def move_h(self):
+        self.direction = 'left'
         if self.rect.x <= 300:
             self.direction = 'right'
         if self.rect.x >= 600:
@@ -43,6 +44,19 @@ class Enemy(GameSprite):
             self.rect.x -= self.speed
         else:
             self.rect.x += self.speed
+    
+
+    def move_v(self):
+        self.direction = 'down'
+        if self.rect.y <= 0:
+            self.direction = 'up'
+        if self.rect.y >= 400:
+            self.direction = 'down'
+        
+        if self.direction == 'down':
+            self.rect.y -= self.speed
+        else:
+            self.rect.y += self.speed
 
 class Wall(sprite.Sprite):
     def __init__(self,wall_x,wall_y,wall_width,wall_height):
@@ -67,7 +81,9 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 #Персонажи игры:
 player = Player('hero.png', 5, win_height - 80, 4)
 monster = Enemy('cyborg.png', win_width - 80, 280, 2)
+monster2 = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+
 
 w1 = Wall( 100, 20 , 450, 10)
 w2 = Wall( 100, 480, 350, 10)
@@ -76,16 +92,17 @@ w3 = Wall( 100, 20 , 10, 380)
 
 game = True
 stop = False
+lvl2 = False
 clock = time.Clock()
 FPS = 60
 
 #музыка
-#mixer.init()
-#mixer.music.load('jungles.ogg')
-#mixer.music.play()
+mixer.init()
+mixer.music.load('jungles.ogg')
+mixer.music.play()
 
-#money = mixer.Sound('money.ogg')
-#kick = mixer.Sound('kick.ogg')
+money = mixer.Sound('money.ogg')
+kick = mixer.Sound('kick.ogg')
 
 #надпись
 font.init()
@@ -106,7 +123,7 @@ while game:
         player.move()
 
         monster.reset()
-        monster.move()
+        monster.move_h()
 
         final.reset()
 
@@ -117,13 +134,14 @@ while game:
         if sprite.collide_rect(player,monster) or sprite.collide_rect(player,w1):
             stop = True
             window.blit(lose,(150,200))
-            #kick.play()
+            kick.play()
 
         if sprite.collide_rect(player,final):
-            stop = True
-            window.blit(win,(150,200))
-            #money.play()
+            lvl2 = True
 
+        if lvl2:
+            monster2.reset()
+            monster2.move_v()
 
     display.update()
     clock.tick(FPS)

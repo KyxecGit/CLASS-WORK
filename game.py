@@ -119,6 +119,11 @@ while game:
             window.blit(lose,(150,200))
             #kick.play()
 
+        if sprite.collide_rect(player,final):
+            stop = True
+            window.blit(win,(150,200))
+            #money.play()
+
 
     display.update()
     clock.tick(FPS)

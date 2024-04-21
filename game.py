@@ -75,7 +75,7 @@ w3 = Wall( 100, 20 , 10, 380)
 
 
 game = True
-finish = True
+stop = True
 clock = time.Clock()
 FPS = 60
 
@@ -90,7 +90,7 @@ while game:
             game = False
 
 
-    if finish:
+    if stop:
         window.blit(background,(0, 0))
 
         player.reset()

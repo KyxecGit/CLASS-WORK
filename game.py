@@ -84,6 +84,15 @@ mixer.init()
 mixer.music.load('jungles.ogg')
 mixer.music.play()
 
+money = mixer.Sound('money.ogg')
+kick = mixer.Sound('kick.ogg')
+
+#надписи
+font.init()
+font = font.Font(None, 120)
+win = font.render('YOU WIN!', True, (0,255,0))
+lose = font.render('YOU LOSE!', True, (255,0,0))
+
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -103,8 +112,10 @@ while game:
         w2.reset()
         w3.reset()
 
-        if sprite.collide_rect(player, monster):
+        if sprite.collide_rect(player, monster) or sprite.collide_rect(player, w1):
             stop = False
+            window.blit(lose,(150,200))
+            kick.play()
 
     display.update()
     clock.tick(FPS)

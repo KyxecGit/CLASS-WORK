@@ -75,6 +75,7 @@ w3 = Wall( 100, 20 , 10, 380)
 
 
 game = True
+finish = True
 clock = time.Clock()
 FPS = 60
 
@@ -88,17 +89,22 @@ while game:
         if e.type == QUIT:
             game = False
 
-    window.blit(background,(0, 0))
 
-    player.reset()
-    player.move()
+    if finish:
+        window.blit(background,(0, 0))
 
-    monster.reset()
-    monster.move()
+        player.reset()
+        player.move()
 
-    w1.reset()
-    w2.reset()
-    w3.reset()
+        monster.reset()
+        monster.move()
+
+        w1.reset()
+        w2.reset()
+        w3.reset()
+
+        if sprite.collide_rect(player, monster):
+            finish = False
 
     display.update()
     clock.tick(FPS)

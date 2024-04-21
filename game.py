@@ -108,6 +108,8 @@ while game:
         monster.reset()
         monster.move()
 
+        final.reset()
+
         w1.reset()
         w2.reset()
         w3.reset()
@@ -116,6 +118,11 @@ while game:
             stop = False
             window.blit(lose,(150,200))
             kick.play()
+
+        if sprite.collide_rect(player, final):
+            stop = False
+            window.blit(win,(150,200))
+            money.play()
 
     display.update()
     clock.tick(FPS)

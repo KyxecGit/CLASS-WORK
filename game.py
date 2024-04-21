@@ -104,7 +104,7 @@ while game:
         w3.reset()
 
         if sprite.collide_rect(player, monster):
-            finish = False
+            stop = False
 
     display.update()
     clock.tick(FPS)

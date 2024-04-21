@@ -69,8 +69,10 @@ player = Player('hero.png', 5, win_height - 80, 4)
 monster = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
-wall_1 = Wall(0,0, 400, 20)
-wall_2 = Wall(0,0, 20, 400)
+w1 = Wall( 100, 20 , 450, 10)
+w2 = Wall( 100, 480, 350, 10)
+w3 = Wall( 100, 20 , 10, 380)
+
 
 game = True
 clock = time.Clock()
@@ -94,8 +96,9 @@ while game:
     monster.reset()
     monster.move()
 
-    wall_1.reset()
-    wall_2.reset()
+    w1.reset()
+    w2.reset()
+    w3.reset()
 
     display.update()
     clock.tick(FPS)

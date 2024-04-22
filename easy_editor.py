@@ -1,5 +1,6 @@
 import os
-from PIL import Image, ImageFilter
+from PIL import Image
+from PIL import ImageFilter
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
@@ -85,6 +86,11 @@ class Editor():
         self.save_image()
         self.show_image(os.path.join(workdir,'Mod/',self.filename))
 
+    def sharpen(self):
+        self.image = self.image.filter(ImageFilter.SHARPEN)
+        self.save_image()
+        self.show_image(os.path.join(workdir,'Mod/',self.filename))
+
    
 
   
@@ -112,7 +118,7 @@ btn_gray.clicked.connect(work_image.gray)
 btn_left.clicked.connect(work_image.left)
 btn_right.clicked.connect(work_image.right)
 btn_mirror.clicked.connect(work_image.flip)
-#btn_gray.clicked.connect(work_image.sharpen)
+btn_rezcost.clicked.connect(work_image.sharpen)
 #ЗАПУСК ПРИЛОЖЕНИЯ
 win.setLayout(main_layout)
 win.show()

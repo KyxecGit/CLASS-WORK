@@ -46,16 +46,30 @@ class Editor():
         self.image = None
         self.dir = None
         self.filename = None
+        self.fullname = None
 
     def load_image(self,filename):
         self.filename = filename
-        fullname = os.path.join(workdir,filename)
-        self.image = Image.open(fullname)
+        self.fullname = os.path.join(workdir,filename)
+        self.image = Image.open(self.fullname)
 
     def show_image(self,dir):
         pixmap = QPixmap(dir)
         pixmap = pixmap.scaled(image.width(), image.height(), Qt.KeepAspectRatio)
         image.setPixmap(pixmap)
+
+    def save_image(self):
+        dir = os.path.join(workdir,'Mod/')
+        if not os.path.exists(dir):
+            os.mkdir(dir)
+        fullname = os.path.join(dir,self.filename)
+        self.image.save(fullname)
+
+    def gray(self):
+        self.image = self.image.convert('L')
+        self.save_image()
+        self.show_image(os.path.join(workdir,'Mod/',self.filename))
+
   
 def show_file():
     global workdir
@@ -70,12 +84,14 @@ def show_file():
 def show_chosen_image():
     filename = list_files.currentItem().text()
     work_image.load_image(filename)
-    work_image.show_image(os.path.join(workdir, work_image.filename))
+    work_image.show_image(work_image.fullname)
 
+#Обьект редактора
 work_image = Editor()
+list_files.currentRowChanged.connect(show_chosen_image)
 #ПОДПИСКИ
 btn_folder.clicked.connect(show_file)
-list_files.currentRowChanged.connect(show_chosen_image)
+btn_gray.clicked.connect(work_image.gray)
 #ЗАПУСК ПРИЛОЖЕНИЯ
 win.setLayout(main_layout)
 win.show()

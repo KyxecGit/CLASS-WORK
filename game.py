@@ -73,9 +73,9 @@ wall_1 = Wall(50,50,400,20)
 
 
 game = True
+stop = False
 clock = time.Clock()
 FPS = 60
-
 
 #музыка
 #mixer.init()
@@ -84,7 +84,10 @@ FPS = 60
 
 
 #надпись
-
+font.init()
+font = font.Font(None, 120)
+win = font.render('YOU WIN',True,(0,255,0))
+lose = font.render('YOU LOSE',True,(255,0,0))
 
 while game:
     for e in event.get():
@@ -95,12 +98,17 @@ while game:
     window.blit(background,(0, 0))
 
     player.reset()
-    player.move()
-
     monster.reset()
-    monster.move()
-
     wall_1.reset()
+
+    if stop != True:
+        player.move()
+        monster.move()
+
+    if sprite.collide_rect(player, monster):
+        window.blit(lose,(150,200))
+        stop = True
+
 
     display.update()
     clock.tick(FPS)

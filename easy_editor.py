@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageFilter
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
@@ -70,6 +70,23 @@ class Editor():
         self.save_image()
         self.show_image(os.path.join(workdir,'Mod/',self.filename))
 
+    def left(self):
+        self.image = self.image.transpose(Image.ROTATE_90)
+        self.save_image()
+        self.show_image(os.path.join(workdir,'Mod/',self.filename))
+
+    def right(self):
+        self.image = self.image.transpose(Image.ROTATE_270)
+        self.save_image()
+        self.show_image(os.path.join(workdir,'Mod/',self.filename))
+
+    def flip(self):
+        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+        self.save_image()
+        self.show_image(os.path.join(workdir,'Mod/',self.filename))
+
+   
+
   
 def show_file():
     global workdir
@@ -92,6 +109,10 @@ list_files.currentRowChanged.connect(show_chosen_image)
 #ПОДПИСКИ
 btn_folder.clicked.connect(show_file)
 btn_gray.clicked.connect(work_image.gray)
+btn_left.clicked.connect(work_image.left)
+btn_right.clicked.connect(work_image.right)
+btn_mirror.clicked.connect(work_image.flip)
+#btn_gray.clicked.connect(work_image.sharpen)
 #ЗАПУСК ПРИЛОЖЕНИЯ
 win.setLayout(main_layout)
 win.show()

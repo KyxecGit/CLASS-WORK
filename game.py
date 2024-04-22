@@ -78,10 +78,12 @@ clock = time.Clock()
 FPS = 60
 
 #музыка
-#mixer.init()
-#mixer.music.load('jungles.ogg')
-#mixer.music.play()
+mixer.init()
+mixer.music.load('jungles.ogg')
+mixer.music.play()
 
+money = mixer.Sound('money.ogg')
+kick = mixer.Sound('kick.ogg')
 
 #надпись
 font.init()
@@ -94,21 +96,25 @@ while game:
         if e.type == QUIT:
             game = False
 
-  
-    window.blit(background,(0, 0))
-
-    player.reset()
-    monster.reset()
-    wall_1.reset()
-
     if stop != True:
+        window.blit(background,(0, 0))
+        player.reset()
         player.move()
+        monster.reset()
         monster.move()
+        final.reset()
+        wall_1.reset()
+        
+        if sprite.collide_rect(player, monster) or sprite.collide_rect(player, wall_1):
+            window.blit(lose,(150,200))
+            kick.play()
+            stop = True
 
-    if sprite.collide_rect(player, monster):
-        window.blit(lose,(150,200))
-        stop = True
 
+        if sprite.collide_rect(player, final):
+            window.blit(win,(150,200))
+            money.play()
+            stop = True
 
     display.update()
     clock.tick(FPS)

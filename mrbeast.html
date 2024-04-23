@@ -8,26 +8,25 @@
 </head>
 <body>
 
-    <header>
-        <img src="https://logos-marcas.com/wp-content/uploads/2021/09/MrBeast-Logo.png">
-        <h1>Mr Beast</h1>
-    </header>
+        <header>
+            <img src="https://quizizz.com/_media/quizzes/50461f81-a0df-4642-af4d-77957a79f35e_900_900">
+            <a href="https://www.youtube.com/@MrBeast">Подписаться</a>
+        </header>
 
-    <h1>Самые популярные видео</h1>
+        <main>
+            <h1> MR BEAST </h1>
+            <div class="video">
+                <iframe width="640" height="360" src="https://www.youtube.com/embed/0e3GPea1Tyg" title="Игра в Кальмара в Реальной Жизни на $456,000!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="640" height="360" src="https://www.youtube.com/embed/zxYjTTXc-J8" title="Кто последний выйдет из круга, получит $500,000" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="640" height="360" src="https://www.youtube.com/embed/1WEAJ-DFkHE" title="Билет на Самолет за $1 vs $500,000!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="640" height="360" src="https://www.youtube.com/embed/FM7Z-Xq8Drc" title="Люди с 1 до 100 Лет Сражаются за $500,000" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </main>
 
-    <main>
-
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/erLbbextvlY" title="7 Дней Взаперти на Острове" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/9RhWXPcKBI8" title="Выживи 100 Дней Взаперти, Выиграй $500,000" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/FM7Z-Xq8Drc" title="Люди с 1 до 100 Лет Сражаются за $500,000" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/SobEZfJWCZ0" title="Игра в Кальмара в Реальной Жизни на $456,000!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-    </main>
-
-    <footer>
-        <p>Почта: contact@mrbeastbusiness.com</p>
-        <p>Соединенные Штаты</p>
-    </footer>
+        <footer>
+            <p>Страна: Соединенные Штаты</p>
+            <p>Почта: contact@mrbeastbusiness.com</p>
+        </footer>
     
 </body>
 </html>
@@ -35,53 +34,58 @@
 
 body {
     font-family: sans-serif;
-    background-image: linear-gradient(to right bottom, pink, white , #1ea8e8);
 }
 
 header img {
     width: 200px;
 }
 
-header h1 {
-    margin-left: 300px;
-    font-size: 50px;
-    color: pink;
-    text-shadow: 5px 5px 5px black;
+header a {
+    text-decoration: none;
+    background-color: palevioletred;
+    padding: 10px;
+    font-size: 30px;
+    color: deepskyblue;
+    text-shadow: 2px 2px 2px black;
+    box-shadow: 5px 5px 5px 0px black;
 }
 
 header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px;
+    background-image: linear-gradient(to right,skyblue,palevioletred);
 }
 
-h1 {
+main h1 {
+    color: palevioletred;
     text-align: center;
-    font-size: 60px;
-    color: #1ea8e8;
-    text-shadow: 5px 5px 5px black;
+    font-size: 70px;
+    text-shadow: 10px 10px 10px skyblue;
 }
 
 iframe {
-    display: block;
     width: 500px;
-    padding: 20px;
+    height: 350px;
+    margin: 10px;
 }
 
-main {
+.video {
     display: flex;
-    margin: 0 auto 0 auto;
-    justify-content: space-around;
-    width: 1100px;
     flex-wrap: wrap;
+    justify-content: center;
+    width: 1100px;
+    margin: 0 auto;
 }
 
 footer p {
-    font-size: 25px;
-    padding: 5px;
-    color: color;
+    font-size: 30px;
+    color: skyblue;
     text-shadow: 5px 5px 5px black;
 }
 
 footer {
-    padding: 10px;
+    background-image: linear-gradient(to right,palevioletred,skyblue);
+    padding: 20px;
 }

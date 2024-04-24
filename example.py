@@ -10,11 +10,39 @@ window.setWindowTitle('Калькулятор ИМТ')
 window.resize(400,200)
 
 result = QLabel('Введите ваши данные: ')
+result.setStyleSheet('''
+                        color: black;
+                        background-color: white;
+                        font-size: 30px;
+                        padding: 10px;
+                        border: 5px solid black;
+''')
 weight = QLineEdit()
+weight.setStyleSheet('''
+                        color: black;
+                        background-color: white;
+                        font-size: 20px;
+                        padding: 10px;
+                        border: 5px solid black;
+''')
 weight.setPlaceholderText('Введите ваш вес: ')
 height = QLineEdit()
+height.setStyleSheet('''
+                        color: black;
+                        background-color: white;
+                        font-size: 20px;
+                        padding: 10px;
+                        border: 5px solid black;
+''')
 height.setPlaceholderText('Введите ваш рост: ')
 button = QPushButton('Расчитать')
+button.setStyleSheet('''
+                        color: black;
+                        background-color: white;
+                        font-size: 20px;
+                        padding: 10px;
+                        border: 5px solid black;
+''')
 
 layout = QVBoxLayout()
 layout.addWidget(result)

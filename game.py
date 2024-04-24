@@ -7,7 +7,7 @@ class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_speed):
         super().__init__()
        # каждый спрайт должен хранить свойство image - изображение
-        self.image = transform.scale(image.load(player_image), (55, 55))
+        self.image = transform.scale(image.load(player_image), (80, 80))
         self.speed = player_speed
        # каждый спрайт должен хранить свойство rect - прямоугольник, в который он вписан
         self.rect = self.image.get_rect()
@@ -42,7 +42,7 @@ background = transform.scale(image.load("galaxy.jpg"), (win_width, win_height))
 
 
 #Персонажи игры:
-
+ship = Player('rocket.png', 310, 410, 10)
 
 game = True
 finish = False
@@ -69,5 +69,9 @@ while game:
             game = False
 
     window.blit(background,(0,0))
+
+    ship.reset()
+    ship.update()
+
     display.update()
     clock.tick(FPS)

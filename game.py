@@ -37,8 +37,8 @@ class Enemy(GameSprite):
 win_width = 700
 win_height = 500
 window = display.set_mode((win_width, win_height))
-display.set_caption("Maze")
-background = transform.scale(image.load("background.jpg"), (win_width, win_height))
+display.set_caption("Space shooter")
+background = transform.scale(image.load("galaxy.jpg"), (win_width, win_height))
 
 
 #Персонажи игры:
@@ -57,18 +57,17 @@ lose = font.render('YOU LOSE!', True, (180, 0, 0))
 
 
 #музыка
-mixer.init()
-mixer.music.load('jungles.ogg')
-mixer.music.play()
+#mixer.init()
+#mixer.music.load('space.ogg')
+#mixer.music.play()
 
-money = mixer.Sound('money.ogg')
-kick = mixer.Sound('kick.ogg')
-
+#fire = mixer.Sound('fire.ogg')
 
 while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
 
+    window.blit(background,(0,0))
     display.update()
     clock.tick(FPS)

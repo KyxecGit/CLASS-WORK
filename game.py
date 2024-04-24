@@ -1,5 +1,6 @@
 
 from pygame import *
+from random import randint
 
 #класс-родитель для спрайтов
 class GameSprite(sprite.Sprite):
@@ -31,7 +32,10 @@ class Player(GameSprite):
 #класс-наследник для спрайта-врага (перемещается сам)
 class Enemy(GameSprite):
     def update(self):
-        pass
+        self.rect.y += self.speed
+        if self.rect.y > win_height:
+            self.rect.x = randint(80,600)
+            self.rect.y = 0
 
 #Игровая сцена:
 win_width = 700
@@ -43,6 +47,7 @@ background = transform.scale(image.load("galaxy.jpg"), (win_width, win_height))
 
 #Персонажи игры:
 ship = Player('rocket.png', 310, 410, 10)
+enemy = Enemy('ufo.png',310,0,30)
 
 game = True
 finish = False
@@ -72,6 +77,9 @@ while game:
 
     ship.reset()
     ship.update()
+
+    enemy.reset()
+    enemy.update()
 
     display.update()
     clock.tick(FPS)

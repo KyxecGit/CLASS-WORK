@@ -47,7 +47,11 @@ background = transform.scale(image.load("galaxy.jpg"), (win_width, win_height))
 
 #Персонажи игры:
 ship = Player('rocket.png', 310, 410, 10)
-enemy = Enemy('ufo.png',310,0,30)
+
+enemys = sprite.Group()
+for i in range(5):
+    enemy = Enemy('ufo.png',randint(80,600),0,randint(5,10))
+    enemys.add(enemy)
 
 game = True
 finish = False
@@ -78,8 +82,8 @@ while game:
     ship.reset()
     ship.update()
 
-    enemy.reset()
-    enemy.update()
-
+    enemys.draw(window)
+    enemys.update()
+    
     display.update()
     clock.tick(FPS)

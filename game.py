@@ -34,10 +34,15 @@ class Player(GameSprite):
 
 # класс врагов
 class Enemy(GameSprite):
-  pass
+    def update(self):
+        self.rect.y += self.speed
+        if self.rect.y > window_height:
+            self.rect.y = 0
+            self.rect.x = randint(0,700)
 
 #Создаем персонажей
 ship  = Player('rocket.png',300,380,70,120,10)
+enemy  = Enemy('ufo.png',300,0,100,50,5)
 
 #Создаем окно
 window_width = 700
@@ -54,8 +59,12 @@ while game:
             game = False
 
     window.blit(background,(0,0))
+
     ship.reset()
     ship.update()
+
+    enemy.reset()
+    enemy.update()
 
     display.update()
     time.delay(20)

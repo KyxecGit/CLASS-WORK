@@ -24,63 +24,9 @@ class GameSprite(sprite.Sprite):
 
 # класс главного игрока
 class Player(GameSprite):
-    def move(self):
-        keys = key.get_pressed()
-        if keys[K_LEFT] and self.rect.x > 0:
-            self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < 650:
-            self.rect.x += self.speed
+  pass
 
-
-lost = 0
 # класс врагов
 class Enemy(GameSprite):
-    def update(self):
-        global lost
-        self.rect.y += self.speed
-        if self.rect.y > win_height:
-            self.rect.y = 0
-            self.rect.x = randint(100,600)
-            lost += 1
+  pass
         
-#Создаем спрайты
-ship = Player('rocket.png',300,380,70,120,10)
-
-enemys = sprite.Group()
-for i in range(10):
-    enemy = Enemy('ufo.png',randint(100,600),0,100,50,randint(5,10))
-    enemys.add(enemy)
-
-#Создаем экран
-win_width = 700
-win_height = 500
-window = display.set_mode((win_width,win_height))
-display.set_caption('Shooter')
-background = transform.scale(image.load('galaxy.jpg'),(win_width,win_height))
-
-#Шрифт
-font.init()
-font = font.Font(None,50)
-
-#Игровой цикл
-game = True
-while game:
-
-  for e in event.get():
-      if e.type == QUIT:
-          game = False
-
-  window.blit(background,(0,0))
-
-  window.blit(font.render('Счет:',True,(255,255,255)),(20,20))
-  window.blit(font.render('Пропущено:' + str(lost),True,(255,255,255)),(20,60))
-
-  ship.reset()
-  ship.move()
-
-  enemys.update()
-  enemys.draw(window)
-  
-
-  display.update()
-  time.delay(50)

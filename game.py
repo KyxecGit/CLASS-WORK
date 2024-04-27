@@ -1,5 +1,5 @@
 #Создай собственный Шутер!
-
+from random import randint
 from pygame import *
 
 # класс-родитель для других спрайтов
@@ -24,15 +24,33 @@ class GameSprite(sprite.Sprite):
 
 # класс главного игрока
 class Player(GameSprite):
-    pass
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_LEFT] and self.rect.x > 0:
+            self.rect.x -= self.speed
+        if keys[K_RIGHT] and self.rect.x < 650:
+            self.rect.x += self.speed
+            
+# класс врагов
+class Enemy(GameSprite):
+    def move(self):
+        self.rect.y += self.speed
+        if self.rect.y > win_height:
+            self.rect.y = 0
+            self.rect.x = randint(100,600)
+        
+#Создаем спрайты
+ship = Player('rocket.png',300,380,70,120,10)
+enemy = Enemy('ufo.png',300,0,100,50,5)
 
-
+#Создаем экран
 win_width = 700
 win_height = 500
 window = display.set_mode((win_width,win_height))
 display.set_caption('Shooter')
 background = transform.scale(image.load('galaxy.jpg'),(win_width,win_height))
 
+#Игровой цикл
 game = True
 while game:
 
@@ -41,4 +59,12 @@ while game:
           game = False
 
   window.blit(background,(0,0))
+
+  ship.reset()
+  ship.move()
+
+  enemy.reset()
+  enemy.move()
+
   display.update()
+  time.delay(50)

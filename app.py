@@ -55,3 +55,31 @@ def add_question():
 clear_db()
 create_db()
 add_question()
+
+
+
+
+
+
+
+
+
+
+from flask import Flask, url_for, redirect
+import sqlite3
+
+def index():
+    conn = sqlite3.connect('quiz.sqlite')
+    cursor = conn.cursor()
+    cursor.execute('SELECT quiz FROM question')
+    data = cursor.fetchall()
+    result = '<h1> Список викторин </h1> <ol>'
+    for quiz in data:
+        result += '<li>' + quiz[0] + '</li>'
+    result += '</ol>'
+    return result
+
+app = Flask(__name__)
+app.add_url_rule('/','index', index)
+
+app.run()

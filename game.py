@@ -30,3 +30,20 @@ class Player(GameSprite):
 class Enemy(GameSprite):
   pass
         
+#Создаем окно
+window_width = 700
+window_height = 500
+window = display.set_mode((window_width,window_height))
+background = transform.scale(image.load('galaxy.jpg'),(window_width,window_height))
+
+#Игровой цикл
+game = True
+while game:
+   
+    for e in event.get():
+        if e.type == QUIT:
+            game = False
+
+    window.blit(background,(0,0))
+
+    display.update()

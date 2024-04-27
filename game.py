@@ -1,5 +1,6 @@
 #Создай собственный Шутер!
 from random import randint
+from typing import Any
 from pygame import *
 
 # класс-родитель для других спрайтов
@@ -24,12 +25,20 @@ class GameSprite(sprite.Sprite):
 
 # класс главного игрока
 class Player(GameSprite):
-  pass
+    def update(self):
+        keys = key.get_pressed()
+        if keys[K_LEFT]:
+            self.rect.x -= self.speed
+        if keys[K_RIGHT]:
+            self.rect.x += self.speed
 
 # класс врагов
 class Enemy(GameSprite):
   pass
-        
+
+#Создаем персонажей
+ship  = Player('rocket.png',300,380,70,120,10)
+
 #Создаем окно
 window_width = 700
 window_height = 500
@@ -45,5 +54,8 @@ while game:
             game = False
 
     window.blit(background,(0,0))
+    ship.reset()
+    ship.update()
 
     display.update()
+    time.delay(20)

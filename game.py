@@ -42,7 +42,11 @@ class Enemy(GameSprite):
 
 #Создаем персонажей
 ship  = Player('rocket.png',300,380,70,120,10)
-enemy  = Enemy('ufo.png',300,0,100,50,5)
+
+enemys = sprite.Group()
+for i in range(10):
+    enemy = Enemy('ufo.png',randint(0,700),0,100,50,randint(5,10))
+    enemys.add(enemy)
 
 #Создаем окно
 window_width = 700
@@ -63,8 +67,8 @@ while game:
     ship.reset()
     ship.update()
 
-    enemy.reset()
-    enemy.update()
+    enemys.draw(window)
+    enemys.update()
 
     display.update()
     time.delay(20)

@@ -33,7 +33,7 @@ class Player(GameSprite):
             
 # класс врагов
 class Enemy(GameSprite):
-    def move(self):
+    def update(self):
         self.rect.y += self.speed
         if self.rect.y > win_height:
             self.rect.y = 0
@@ -41,7 +41,11 @@ class Enemy(GameSprite):
         
 #Создаем спрайты
 ship = Player('rocket.png',300,380,70,120,10)
-enemy = Enemy('ufo.png',300,0,100,50,5)
+
+enemys = sprite.Group()
+for i in range(10):
+    enemy = Enemy('ufo.png',randint(100,600),0,100,50,randint(5,10))
+    enemys.add(enemy)
 
 #Создаем экран
 win_width = 700
@@ -63,8 +67,9 @@ while game:
   ship.reset()
   ship.move()
 
-  enemy.reset()
-  enemy.move()
+  enemys.update()
+  enemys.draw(window)
+  
 
   display.update()
   time.delay(50)

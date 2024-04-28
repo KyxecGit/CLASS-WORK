@@ -2,10 +2,10 @@ from pygame import *
 from random import randint
 
 #фоновая музыка
-mixer.init()
-mixer.music.load('space.ogg')
-mixer.music.play()
-fire_sound = mixer.Sound('fire.ogg')
+#mixer.init()
+#mixer.music.load('space.ogg')
+#mixer.music.play()
+#fire_sound = mixer.Sound('fire.ogg')
 
 #шрифты и надписи
 font.init()
@@ -100,7 +100,7 @@ while run:
             run = False
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                fire_sound.play()
+                #fire_sound.play()
                 ship.fire()
 
 

@@ -148,5 +148,12 @@ while run:
 
 
         display.update()
+    else:
+        finish = False
+        score = 0
+        lost = 0
+        life = 3
+        time.delay(5000)
+
     # цикл срабатывает каждую 0.05 секунд
     time.delay(50)

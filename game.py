@@ -2,10 +2,10 @@ from pygame import *
 from random import randint
 
 #фоновая музыка
-#mixer.init()
-#mixer.music.load('space.ogg')
-#mixer.music.play()
-#fire_sound = mixer.Sound('fire.ogg')
+mixer.init()
+mixer.music.load('space.ogg')
+mixer.music.play()
+fire_sound = mixer.Sound('fire.ogg')
 
 #шрифты и надписи
 font.init()
@@ -19,6 +19,7 @@ img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
+life = 3
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -99,7 +100,7 @@ while run:
             run = False
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                #fire_sound.play()
+                fire_sound.play()
                 ship.fire()
 
 
@@ -113,6 +114,9 @@ while run:
 
         text_lose = font2.render("Пропущено: " + str(lost), 1, (255, 255, 255))
         window.blit(text_lose, (10, 50))
+
+        life_point = font1.render(str(life), 1, (255, 255, 255))
+        window.blit(life_point, (650, 20))
 
         # производим движения спрайтов
         ship.update()
@@ -129,7 +133,10 @@ while run:
             win = font1.render("WIN", 1, (0, 255, 0))
             window.blit(win, (200, 200))
 
-        if sprite.spritecollide(ship, monsters, False) or lost > 5:
+        if sprite.spritecollide(ship, monsters, True):
+            life -= 1
+
+        if life == 0 or lost > 5:
             finish = True
             lose = font1.render("LOSE", 1, (255, 0, 0))
             window.blit(lose, (200, 200))

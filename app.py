@@ -188,3 +188,38 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+
+
+
+from flask import Flask, redirect, url_for, session
+from db_scripts import get_question_after
+
+
+def index():
+    session['quiz'] = 1
+    session['question'] = 0
+    return '<a href="/test"> Начать тест</a>'
+
+def test():
+    result = get_question_after(session['question'],session['quiz'])
+    if result is None or len(result) == 0:
+        return redirect(url_for('result'))
+    else:
+        session['question'] = result[0]
+        session['question'] += 1
+        return '<h1>' + str(result) + '</h1>'
+    
+def result():
+    return '<h1>Вопросы закончились</h1>'
+
+#Создаем приложение
+app = Flask(__name__)
+#Обработка адрессов сайта
+app.add_url_rule('/','index',index)
+app.add_url_rule('/test','test',test)
+app.add_url_rule('/result','result',result)
+app.config['SECRET_KEY'] = 'BLABLABLA'
+#Запуск приложения
+app.run()
+

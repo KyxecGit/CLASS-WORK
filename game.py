@@ -64,6 +64,11 @@ class Enemy(GameSprite):
             self.rect.y = 0
             lost = lost + 1
 
+class Bullet(GameSprite):
+    def update(self):
+        self.rect.y -= self.speed
+
+
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -88,6 +93,11 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+
+    elif e.type == KEYDOWN:
+        if e.key == K_SPACE:
+            #fire_sound.play()
+            ship.fire()
 
     if not finish:
         # обновляем фон

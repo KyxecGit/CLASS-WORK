@@ -1,4 +1,3 @@
-from typing import Any
 from pygame import *
 from random import randint
 
@@ -10,6 +9,7 @@ from random import randint
 
 #шрифты и надписи
 font.init()
+font1 = font.Font(None,100)
 font2 = font.Font(None, 36)
 
 # нам нужны такие картинки:
@@ -69,6 +69,8 @@ class Enemy(GameSprite):
 class Bullet(GameSprite):
     def update(self):
         self.rect.y -= self.speed
+        if self.rect.y < 0:
+            self.kill()
 
 # Создаем окошко
 win_width = 700
@@ -121,6 +123,22 @@ while run:
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
+
+        if score > 10:
+            finish = True
+            win = font1.render("WIN", 1, (0, 255, 0))
+            window.blit(win, (200, 200))
+
+        if sprite.spritecollide(ship, monsters, False) or lost > 5:
+            finish = True
+            lose = font1.render("LOSE", 1, (255, 0, 0))
+            window.blit(lose, (200, 200))
+
+        if sprite.groupcollide(monsters, bullets, True, True):
+            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+            monsters.add(monster)
+            score += 1
+
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд

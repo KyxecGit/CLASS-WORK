@@ -1,3 +1,4 @@
+from typing import Any
 from pygame import *
 from random import randint
 
@@ -50,7 +51,8 @@ class Player(GameSprite):
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
     def fire(self):
-        pass
+        bullet = Bullet('bullet.png',self.rect.centerx,self.rect.top,15,20,15)
+        bullets.add(bullet)
 
 # класс спрайта-врага   
 class Enemy(GameSprite):
@@ -68,7 +70,6 @@ class Bullet(GameSprite):
     def update(self):
         self.rect.y -= self.speed
 
-
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -79,6 +80,7 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 # создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
+bullets = sprite.Group()
 monsters = sprite.Group()
 for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
@@ -93,11 +95,11 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+        elif e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                #fire_sound.play()
+                ship.fire()
 
-    elif e.type == KEYDOWN:
-        if e.key == K_SPACE:
-            #fire_sound.play()
-            ship.fire()
 
     if not finish:
         # обновляем фон
@@ -113,10 +115,12 @@ while run:
         # производим движения спрайтов
         ship.update()
         monsters.update()
+        bullets.update()
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
+        bullets.draw(window)
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд

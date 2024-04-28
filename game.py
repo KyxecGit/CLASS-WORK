@@ -9,7 +9,6 @@ from random import randint
 
 #шрифты и надписи
 font.init()
-font1 = font.Font(None,100)
 font2 = font.Font(None, 36)
 
 # нам нужны такие картинки:
@@ -19,7 +18,6 @@ img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
-life = 3
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -52,8 +50,7 @@ class Player(GameSprite):
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
     def fire(self):
-        bullet = Bullet('bullet.png',self.rect.centerx,self.rect.top,15,20,15)
-        bullets.add(bullet)
+        pass
 
 # класс спрайта-врага   
 class Enemy(GameSprite):
@@ -67,12 +64,6 @@ class Enemy(GameSprite):
             self.rect.y = 0
             lost = lost + 1
 
-class Bullet(GameSprite):
-    def update(self):
-        self.rect.y -= self.speed
-        if self.rect.y < 0:
-            self.kill()
-
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -83,7 +74,6 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 # создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
-bullets = sprite.Group()
 monsters = sprite.Group()
 for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
@@ -98,11 +88,6 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
-        elif e.type == KEYDOWN:
-            if e.key == K_SPACE:
-                #fire_sound.play()
-                ship.fire()
-
 
     if not finish:
         # обновляем фон
@@ -115,45 +100,14 @@ while run:
         text_lose = font2.render("Пропущено: " + str(lost), 1, (255, 255, 255))
         window.blit(text_lose, (10, 50))
 
-        life_point = font1.render(str(life), 1, (255, 255, 255))
-        window.blit(life_point, (650, 20))
-
         # производим движения спрайтов
         ship.update()
         monsters.update()
-        bullets.update()
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
-        bullets.draw(window)
-
-        if score > 10:
-            finish = True
-            win = font1.render("WIN", 1, (0, 255, 0))
-            window.blit(win, (200, 200))
-
-        if sprite.spritecollide(ship, monsters, True):
-            life -= 1
-
-        if life == 0 or lost > 5:
-            finish = True
-            lose = font1.render("LOSE", 1, (255, 0, 0))
-            window.blit(lose, (200, 200))
-
-        if sprite.groupcollide(monsters, bullets, True, True):
-            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
-            monsters.add(monster)
-            score += 1
-
 
         display.update()
-    else:
-        finish = False
-        score = 0
-        lost = 0
-        life = 3
-        time.delay(5000)
-
     # цикл срабатывает каждую 0.05 секунд
     time.delay(50)

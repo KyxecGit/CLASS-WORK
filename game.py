@@ -121,10 +121,21 @@ while run:
         monsters.draw(window)
         bullets.draw(window)
 
-        if lost > 5:
+       
+        if sprite.spritecollide(ship,monsters,False) or lost > 5:
             finish = True
+            lose = font.Font(None,120).render('YOU LOSE',True,(255,0,0))
+            window.blit(lose,(200,200))
+
+        if sprite.groupcollide(bullets,monsters,True,True):
+            score += 1
+            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+            monsters.add(monster)
+            if score == 10:
+                finish = True
+                win = font.Font(None,120).render('YOU WIN',True,(0,255,0))
+                window.blit(win,(200,200))
 
         display.update()
-
     # цикл срабатывает каждую 0.05 секунд
     time.delay(50)

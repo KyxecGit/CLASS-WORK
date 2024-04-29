@@ -19,6 +19,7 @@ img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
+life = 3
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -111,6 +112,9 @@ while run:
         text_lose = font2.render("Пропущено: " + str(lost), 1, (255, 255, 255))
         window.blit(text_lose, (10, 50))
 
+        text_life = font.Font(None,80).render(str(life), 1, (255, 255, 255))
+        window.blit(text_life, (600, 10))
+
         # производим движения спрайтов
         ship.update()
         monsters.update()
@@ -122,7 +126,10 @@ while run:
         bullets.draw(window)
 
        
-        if sprite.spritecollide(ship,monsters,False) or lost > 5:
+        if sprite.spritecollide(ship,monsters,True):
+            life -= 1
+
+        if lost > 5 or life == 0:
             finish = True
             lose = font.Font(None,120).render('YOU LOSE',True,(255,0,0))
             window.blit(lose,(200,200))
@@ -137,5 +144,11 @@ while run:
                 window.blit(win,(200,200))
 
         display.update()
+
+    else:
+        finish = False
+        lost = 0
+        score = 0
+        time.delay(5000)
     # цикл срабатывает каждую 0.05 секунд
     time.delay(50)

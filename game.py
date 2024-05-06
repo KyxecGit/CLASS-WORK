@@ -36,8 +36,21 @@ while game:
     if keys[K_RIGHT]:
         hero.rect.x += 10
 
+    
+    #if enemy.rect.x  <= 500:
+        #side = 'right'
+    #if enemy.rect.x >= 100:
+        #side = 'left'
+    
+    #if side == 'left':
+        #enemy.rect.x -= 10
+    #else:
+        #enemy.rect.x += 10
+
+
     hero.view()
     enemy.view()
     gold.view()
 
+    time.delay(50)
     display.update()

@@ -35,14 +35,28 @@ def stop_wall(wall):
         else:
             hero.rect.y -= 10
 
+def enemy_move(enemy):
+    if enemy.rect.x < hero.rect.x:
+        enemy.rect.x += 1
+
+    if enemy.rect.x > hero.rect.x:
+        enemy.rect.x -= 1
+
+    if enemy.rect.y < hero.rect.y:
+        enemy.rect.y += 1
+
+    if enemy.rect.y > hero.rect.y:
+        enemy.rect.y -= 1
+
 
 #Создаем обьекты для нашей игры
-wall_1 = Wall(200,100,600,10)
+wall_1 = Wall(200,100,10,600)
 wall_2 = Wall(400,100,10,600)
 wall_3 = Wall(600,100,10,600)
 
 hero = GameSprite(100,400,'hero.png')
-enemy = GameSprite(500,200,'cyborg.png')
+enemy1 = GameSprite(500,200,'cyborg.png')
+enemy2 = GameSprite(50,0,'cyborg.png')
 gold = GameSprite(600,400,'treasure.png')
 #Создание экрана
 window = display.set_mode((700,500))
@@ -51,9 +65,9 @@ background = transform.scale(image.load('background.jpg'),(700,500))
 #шрифт
 font.init()
 #музыка
-mixer.init()
-mixer.music.load('jungles.ogg')
-mixer.music.play()
+#mixer.init()
+#mixer.music.load('jungles.ogg')
+#mixer.music.play()
 #Игровой цикл
 game = True
 finish = False
@@ -79,20 +93,11 @@ while game:
             hero.rect.x += 10
 
         #Движение врага
-        if enemy.rect.x < hero.rect.x:
-            enemy.rect.x += 0.5
-
-        if enemy.rect.x > hero.rect.x:
-            enemy.rect.x -= 0.5
-
-        if enemy.rect.y < hero.rect.y:
-            enemy.rect.y += 0.5
-
-        if enemy.rect.y > hero.rect.y:
-            enemy.rect.y -= 0.5
+        enemy_move(enemy1)
+        enemy_move(enemy2)
 
     #условие поражения
-    if sprite.collide_rect(hero, enemy):
+    if sprite.collide_rect(hero, enemy1) or sprite.collide_rect(hero, enemy2):
         lose = font.Font(None,100).render('YOU LOSE',1,(255,0,0))
         window.blit(lose,(200,200))
         finish = True
@@ -110,7 +115,8 @@ while game:
 
     #Отображение персонажей
     hero.view()
-    enemy.view()
+    enemy1.view()
+    enemy2.view()
     gold.view()
 
     wall_1.view()

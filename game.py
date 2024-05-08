@@ -25,7 +25,7 @@ class Wall():
 
 
 #Создаем обьекты для нашей игры
-wall_1 = Wall(50,50,600,20)
+wall_1 = Wall(200,100,10,600)
 hero = GameSprite(100,400,'hero.png')
 enemy = GameSprite(500,200,'cyborg.png')
 gold = GameSprite(600,400,'treasure.png')
@@ -33,9 +33,12 @@ gold = GameSprite(600,400,'treasure.png')
 window = display.set_mode((700,500))
 #Картинка для нашего экрана
 background = transform.scale(image.load('background.jpg'),(700,500))
-
+#шрифт
 font.init()
-
+#музыка
+mixer.init()
+mixer.music.load('jungles.ogg')
+mixer.music.play()
 #Игровой цикл
 game = True
 finish = False
@@ -62,28 +65,35 @@ while game:
 
         #Движение врага
         if enemy.rect.x < hero.rect.x:
-            enemy.rect.x += 1
+            enemy.rect.x += 0.1
 
         if enemy.rect.x > hero.rect.x:
-            enemy.rect.x -= 1
+            enemy.rect.x -= 0.1
 
         if enemy.rect.y < hero.rect.y:
-            enemy.rect.y += 1
+            enemy.rect.y += 0.1
 
         if enemy.rect.y > hero.rect.y:
-            enemy.rect.y -= 1
+            enemy.rect.y -= 0.1
 
     #условие поражения
     if sprite.collide_rect(hero, enemy):
         lose = font.Font(None,100).render('YOU LOSE',1,(255,0,0))
         window.blit(lose,(200,200))
         finish = True
-        
+
     #условие победы
     if sprite.collide_rect(hero, gold):
         win = font.Font(None,100).render('YOU WIN',1,(0,255,0))
         window.blit(win,(200,200))
         finish = True
+
+    if sprite.collide_rect(hero,wall_1):
+        if hero.rect.x >= wall_1.rect.x:
+            hero.rect.x += 10
+        else:
+            hero.rect.x -= 10
+
 
 
     #Отображение персонажей

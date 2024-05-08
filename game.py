@@ -36,6 +36,7 @@ background = transform.scale(image.load('background.jpg'),(700,500))
 
 #Игровой цикл
 game = True
+finish = False
 while game:
 
     window.blit(background,(0,0))
@@ -45,29 +46,34 @@ while game:
         if e.type == QUIT:
             game = False
 
-    #Движение главного героя
-    keys = key.get_pressed()
-    if keys[K_UP]:
-        hero.rect.y -= 10
-    if keys[K_DOWN]:
-        hero.rect.y += 10
-    if keys[K_LEFT]:
-        hero.rect.x -= 10
-    if keys[K_RIGHT]:
-        hero.rect.x += 10
+    if finish != True:
+        #Движение главного героя
+        keys = key.get_pressed()
+        if keys[K_UP]:
+            hero.rect.y -= 10
+        if keys[K_DOWN]:
+            hero.rect.y += 10
+        if keys[K_LEFT]:
+            hero.rect.x -= 10
+        if keys[K_RIGHT]:
+            hero.rect.x += 10
 
-    #Движение врага
-    if enemy.rect.x < hero.rect.x:
-        enemy.rect.x += 1
+        #Движение врага
+        if enemy.rect.x < hero.rect.x:
+            enemy.rect.x += 1
 
-    if enemy.rect.x > hero.rect.x:
-        enemy.rect.x -= 1
+        if enemy.rect.x > hero.rect.x:
+            enemy.rect.x -= 1
 
-    if enemy.rect.y < hero.rect.y:
-        enemy.rect.y += 1
+        if enemy.rect.y < hero.rect.y:
+            enemy.rect.y += 1
 
-    if enemy.rect.y > hero.rect.y:
-        enemy.rect.y -= 1
+        if enemy.rect.y > hero.rect.y:
+            enemy.rect.y -= 1
+
+    #условие поражения
+    if sprite.collide_rect(hero, enemy):
+        finish = True
 
     
 

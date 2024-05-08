@@ -23,9 +23,19 @@ class Wall():
     def view(self):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
+def stop_wall(wall):
+    if sprite.collide_rect(hero,wall):
+        if hero.rect.x >= wall.rect.x:
+            hero.rect.x += 10
+        else:
+            hero.rect.x -= 10
+
 
 #Создаем обьекты для нашей игры
 wall_1 = Wall(200,100,10,600)
+wall_2 = Wall(400,100,10,600)
+wall_3 = Wall(600,100,10,600)
+
 hero = GameSprite(100,400,'hero.png')
 enemy = GameSprite(500,200,'cyborg.png')
 gold = GameSprite(600,400,'treasure.png')
@@ -54,27 +64,27 @@ while game:
     if finish != True:
         #Движение главного героя
         keys = key.get_pressed()
-        if keys[K_UP]:
+        if keys[K_UP] and hero.rect.y > 0:
             hero.rect.y -= 10
-        if keys[K_DOWN]:
+        if keys[K_DOWN] and hero.rect.y < 450:
             hero.rect.y += 10
-        if keys[K_LEFT]:
+        if keys[K_LEFT] and hero.rect.x > 0:
             hero.rect.x -= 10
-        if keys[K_RIGHT]:
+        if keys[K_RIGHT] and hero.rect.x < 650:
             hero.rect.x += 10
 
         #Движение врага
         if enemy.rect.x < hero.rect.x:
-            enemy.rect.x += 0.1
+            enemy.rect.x += 1
 
         if enemy.rect.x > hero.rect.x:
-            enemy.rect.x -= 0.1
+            enemy.rect.x -= 1
 
         if enemy.rect.y < hero.rect.y:
-            enemy.rect.y += 0.1
+            enemy.rect.y += 1
 
         if enemy.rect.y > hero.rect.y:
-            enemy.rect.y -= 0.1
+            enemy.rect.y -= 1
 
     #условие поражения
     if sprite.collide_rect(hero, enemy):
@@ -88,13 +98,10 @@ while game:
         window.blit(win,(200,200))
         finish = True
 
-    if sprite.collide_rect(hero,wall_1):
-        if hero.rect.x >= wall_1.rect.x:
-            hero.rect.x += 10
-        else:
-            hero.rect.x -= 10
-
-
+    stop_wall(wall_1)
+    stop_wall(wall_2)
+    stop_wall(wall_3)
+    
 
     #Отображение персонажей
     hero.view()
@@ -102,6 +109,8 @@ while game:
     gold.view()
 
     wall_1.view()
+    wall_2.view()
+    wall_3.view()
     #Команда отвечает за частоту отработки цикла
     time.delay(5)
     #Обновление нашего экрана

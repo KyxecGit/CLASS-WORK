@@ -34,6 +34,8 @@ window = display.set_mode((700,500))
 #Картинка для нашего экрана
 background = transform.scale(image.load('background.jpg'),(700,500))
 
+font.init()
+
 #Игровой цикл
 game = True
 finish = False
@@ -73,9 +75,15 @@ while game:
 
     #условие поражения
     if sprite.collide_rect(hero, enemy):
+        lose = font.Font(None,100).render('YOU LOSE',1,(255,0,0))
+        window.blit(lose,(200,200))
         finish = True
-
-    
+        
+    #условие победы
+    if sprite.collide_rect(hero, gold):
+        win = font.Font(None,100).render('YOU WIN',1,(0,255,0))
+        window.blit(win,(200,200))
+        finish = True
 
 
     #Отображение персонажей

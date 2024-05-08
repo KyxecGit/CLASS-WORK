@@ -56,6 +56,22 @@ while game:
     if keys[K_RIGHT]:
         hero.rect.x += 10
 
+    #Движение врага
+    if enemy.rect.x < hero.rect.x:
+        enemy.rect.x += 1
+
+    if enemy.rect.x > hero.rect.x:
+        enemy.rect.x -= 1
+
+    if enemy.rect.y < hero.rect.y:
+        enemy.rect.y += 1
+
+    if enemy.rect.y > hero.rect.y:
+        enemy.rect.y -= 1
+
+    
+
+
     #Отображение персонажей
     hero.view()
     enemy.view()

@@ -30,9 +30,14 @@ def stop_wall(wall):
         else:
             hero.rect.x -= 10
 
+        if hero.rect.y >= wall.rect.y:
+            hero.rect.y += 10
+        else:
+            hero.rect.y -= 10
+
 
 #Создаем обьекты для нашей игры
-wall_1 = Wall(200,100,10,600)
+wall_1 = Wall(200,100,600,10)
 wall_2 = Wall(400,100,10,600)
 wall_3 = Wall(600,100,10,600)
 
@@ -75,16 +80,16 @@ while game:
 
         #Движение врага
         if enemy.rect.x < hero.rect.x:
-            enemy.rect.x += 1
+            enemy.rect.x += 0.5
 
         if enemy.rect.x > hero.rect.x:
-            enemy.rect.x -= 1
+            enemy.rect.x -= 0.5
 
         if enemy.rect.y < hero.rect.y:
-            enemy.rect.y += 1
+            enemy.rect.y += 0.5
 
         if enemy.rect.y > hero.rect.y:
-            enemy.rect.y -= 1
+            enemy.rect.y -= 0.5
 
     #условие поражения
     if sprite.collide_rect(hero, enemy):

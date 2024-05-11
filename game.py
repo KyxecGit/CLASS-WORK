@@ -7,16 +7,22 @@ class GameSprite():
         self.rect.x = x
         self.rect.y = y
 
-ball = GameSprite(300,250,'ball.png',50,50)
+    def view(self):
+        window.blit(self.image,(self.rect.x,self.rect.y))
+
+ball = GameSprite(350,200,'ball.png',50,50)
 
 window = display.set_mode((700,500))
 
 game = True
 while game:
 
+    window.fill((200,255,255))
+
     for e in event.get():
         if e.type == QUIT:
             game = False
 
-    window.fill((200,255,255))
+    ball.view()
+
     display.update()

@@ -14,6 +14,8 @@ ball = GameSprite('ball.png',350,250,50,50)
 player = GameSprite('player.png',0,250,100,250)
 ai = GameSprite('ai.png',600,250,100,250)
 
+font.init()
+
 window = display.set_mode((700,500))
 
 speed_x = 1
@@ -48,6 +50,8 @@ while game:
         else:
             ai.rect.y -= 2
 
+    if sprite.collide_rect(ball,player) or sprite.collide_rect(ball,ai):
+        speed_x *= -1
+
     
     display.update()
-    time.delay(2)

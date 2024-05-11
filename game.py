@@ -11,6 +11,8 @@ class GameSprite():
         window.blit(self.image,(self.rect.x,self.rect.y))
 
 ball = GameSprite('ball.png',350,250,50,50)
+player = GameSprite('player.png',0,250,100,250)
+ai = GameSprite('ai.png',600,250,100,250)
 
 window = display.set_mode((700,500))
 
@@ -22,6 +24,8 @@ while game:
 
     window.fill((200,250,250))
     ball.show()
+    player.show()
+    ai.show()
     
     for e in event.get():
         if e.type == QUIT:

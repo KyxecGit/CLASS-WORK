@@ -21,6 +21,10 @@ window = display.set_mode((700,500))
 speed_x = 1
 speed_y = 1
 
+player_score = 0
+ai_score = 0
+
+
 game = True
 while game:
 
@@ -36,8 +40,7 @@ while game:
    
     ball.rect.x += speed_x
     ball.rect.y += speed_y
-    if ball.rect.x > 650 or ball.rect.x < 0:
-        speed_x *= -1
+
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
 
@@ -52,6 +55,21 @@ while game:
 
     if sprite.collide_rect(ball,player) or sprite.collide_rect(ball,ai):
         speed_x *= -1
+
+
+    score_1 = font.Font(None,50).render('Счет: ' + str(player_score),1,(255,255,255))
+    score_2 = font.Font(None,50).render('Счет: ' + str(ai_score),1,(255,255,255))
+
+    window.blit(score_1,(0,0))
+    window.blit(score_1,(550,0))
+
+    if ball.rect.x > 650:
+        player_score += 1
+        ball.rect.x = 300
+        
+    if ball.rect.x < 0:
+        ai_score += 1
+        ball.rect.x = 300
 
     
     display.update()

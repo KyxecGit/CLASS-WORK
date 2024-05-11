@@ -14,6 +14,9 @@ ball = GameSprite(350,200,'ball.png',50,50)
 
 window = display.set_mode((700,500))
 
+speed_x = 1
+speed_y = 1
+
 game = True
 while game:
 
@@ -23,6 +26,15 @@ while game:
         if e.type == QUIT:
             game = False
 
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+
+    if ball.rect.x > 650 or ball.rect.x < 0:
+        speed_x *= -1
+        
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        speed_y *= -1
+    
     ball.view()
 
     display.update()

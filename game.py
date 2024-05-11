@@ -21,8 +21,7 @@ ai_score = 0
 
 font.init()
 font = font.Font(None,50)
-score1 = font.render('Очки: ' + str(player_score),1,(0,0,0))
-score2 = font.render('Очки: ' + str(ai_score),1,(0,0,0))
+
 
 speed_x = 3
 speed_y = 3
@@ -31,6 +30,10 @@ game = True
 while game:
 
     window.fill((200,255,255))
+
+    score1 = font.render('Очки: ' + str(player_score),1,(0,0,0))
+    score2 = font.render('Очки: ' + str(ai_score),1,(0,0,0))
+
     window.blit(score1,(30,30))
     window.blit(score2,(500,30))
 
@@ -48,9 +51,9 @@ while game:
         speed_y *= -1
 
     keys = key.get_pressed()
-    if keys[K_UP]:
+    if keys[K_UP] and player.rect.y > 0:
         player.rect.y -= 3
-    if keys[K_DOWN]:
+    if keys[K_DOWN] and player.rect.y < 400:
         player.rect.y += 3
 
     if ai.rect.y != ball.rect.y:
@@ -58,6 +61,19 @@ while game:
             ai.rect.y += 1
         else:
             ai.rect.y -= 1
+
+    if ball.rect.x < 0:
+        ai_score += 1
+        ball.rect.x = 300
+        ball.rect.y = 200
+        time.delay(1000)
+
+    if ball.rect.x > 650:
+        player_score += 1
+        speed_x *= -1
+        ball.rect.x = 300
+        ball.rect.y = 200
+        time.delay(1000)
     
     ball.view()
     player.view()

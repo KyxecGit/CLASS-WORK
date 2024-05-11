@@ -39,6 +39,15 @@ while game:
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
 
+    mouse_x, mouse_y = mouse.get_pos()
+    player.rect.centery = mouse_y
+
+    if ai.rect.centery != ball.rect.centery:
+        if ai.rect.centery < ball.rect.centery:
+            ai.rect.y += 2
+        else:
+            ai.rect.y -= 2
+
     
     display.update()
     time.delay(2)

@@ -16,13 +16,23 @@ ai = GameSprite(625,200,'racket.png',75,150)
 
 window = display.set_mode((700,500))
 
-speed_x = 1
-speed_y = 1
+player_score = 0
+ai_score = 0
+
+font.init()
+font = font.Font(None,50)
+score1 = font.render('Очки: ' + str(player_score),1,(0,0,0))
+score2 = font.render('Очки: ' + str(ai_score),1,(0,0,0))
+
+speed_x = 3
+speed_y = 3
 
 game = True
 while game:
 
     window.fill((200,255,255))
+    window.blit(score1,(30,30))
+    window.blit(score2,(500,30))
 
     for e in event.get():
         if e.type == QUIT:
@@ -37,14 +47,21 @@ while game:
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
 
+    keys = key.get_pressed()
+    if keys[K_UP]:
+        player.rect.y -= 3
+    if keys[K_DOWN]:
+        player.rect.y += 3
+
     if ai.rect.y != ball.rect.y:
         if ai.rect.centery < ball.rect.centery:
-            ai.rect.y += 2
+            ai.rect.y += 1
         else:
-            ai.rect.y -= 2
+            ai.rect.y -= 1
     
     ball.view()
     player.view()
     ai.view()
 
     display.update()
+    time.delay(10)

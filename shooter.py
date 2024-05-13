@@ -1,4 +1,7 @@
 from pygame import *
+
+
+
 #нам нужны такие картинки:
 img_back = "galaxy.jpg" #фон игры
 img_bullet = "bullet.png" #пуля
@@ -42,7 +45,16 @@ class Player(GameSprite):
        bullets.add(bullet)
 
 
+#класс спрайта-врага  
 
+#класс спрайта-пули  
+class Bullet(GameSprite):
+   # движение врага
+   def update(self):
+       self.rect.y += self.speed
+       # исчезает, если дойдет до края экрана
+       if self.rect.y < 0:
+           self.kill()
 #создаём окошко
 win_width = 700
 win_height = 500
@@ -55,6 +67,7 @@ ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
 bullets = sprite.Group()
 #переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
+
 #основной цикл игры:
 run = True #флаг сбрасывается кнопкой закрытия окна
 while run:
@@ -65,8 +78,8 @@ while run:
        #событие нажатия на пробел - спрайт стреляет
        elif e.type == KEYDOWN:
            if e.key == K_SPACE:
-               fire_sound.play()
+
                ship.fire()
 
-  
- 
+    display.update()
+

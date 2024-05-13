@@ -1,12 +1,8 @@
 from pygame import *
-
-
-
 #нам нужны такие картинки:
-img_back = "galaxy.jpg" #фон игры
-img_bullet = "bullet.png" #пуля
-img_hero = "rocket.png" #герой
-img_enemy = "ufo.png" #враг
+img_back = "back.jpg" #фон игры
+img_bullet = "laser.png" #пуля
+img_hero = "hero.png" #герой
 
 #класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -44,17 +40,12 @@ class Player(GameSprite):
        bullet = Bullet(img_bullet, self.rect.centerx, self.rect.top, 15, 20, -15)
        bullets.add(bullet)
 
-
-#класс спрайта-врага  
-
-#класс спрайта-пули  
 class Bullet(GameSprite):
-   # движение врага
-   def update(self):
-       self.rect.y += self.speed
-       # исчезает, если дойдет до края экрана
-       if self.rect.y < 0:
-           self.kill()
+    def update(self):
+        self.rect.y -= 10
+
+
+
 #создаём окошко
 win_width = 700
 win_height = 500
@@ -67,7 +58,6 @@ ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
 bullets = sprite.Group()
 #переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
-
 #основной цикл игры:
 run = True #флаг сбрасывается кнопкой закрытия окна
 while run:
@@ -78,8 +68,15 @@ while run:
        #событие нажатия на пробел - спрайт стреляет
        elif e.type == KEYDOWN:
            if e.key == K_SPACE:
-
                ship.fire()
 
-    display.update()
+   window.blit(background,(0,0))
+   ship.reset()
+   ship.update()
 
+   bullets.draw(window)
+   bullets.update()
+   display.update()
+
+  
+ 

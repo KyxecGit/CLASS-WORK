@@ -22,14 +22,19 @@ while otvet != 'досвидос амиго':
         print('Я загадал число от 1 до 100 посмотрим с какой попытки ты его угадаешь?)')
         rand_num = randint(0,100)
         otvet = int(input('Введите число:'))
-        for _ in range(10):
+        for popytka in range(10): 
+
             if otvet == rand_num:
                 print('Вы угадали! Приз пачка сухариков')
+                break
             else:
                 if otvet > rand_num:
                     print('Загадоное число меньше')
                 else:
                     print('Загадоное число больше')
+
+            otvet = int(input('Попробуй еще раз'))
+        print('Вы угадали с',popytka + 1,'попытки')
 
 
     else:

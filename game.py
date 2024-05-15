@@ -51,7 +51,14 @@ for _ in range(5):
     enemy = Enemy('ufo.png', randint(1,600), 0, 100, 100)
     enemys.add(enemy)
 
+#шрифт
+font.init()
+
+score = 0
+
 run = True 
+reload = False
+
 while run:
 
     for e in event.get():
@@ -61,15 +68,37 @@ while run:
             if e.key == K_SPACE:
                 ship.fire()
 
-    window.blit(background,(0,0))
+    if not reload:
 
-    ship.update()
-    bullets.update()
-    enemys.update()
+        window.blit(background,(0,0))
 
-    ship.reset()
-    bullets.draw(window)
-    enemys.draw(window)
+        score_text = font.Font(None,50).render('Счет: ' + str(score),1,(255,255,255))
+        window.blit(score_text,(10,10))
 
-    display.update()
+        ship.reset()
+        bullets.draw(window)
+        enemys.draw(window)
+
+        ship.update()
+        bullets.update()
+        enemys.update()
+
+        if sprite.groupcollide(bullets, enemys, True,True):
+            enemy = Enemy('ufo.png', randint(1,600), 0, 100, 100)
+            enemys.add(enemy)
+            score += 1
+
+        if score == 10:
+            win = font.Font(None,100).render('YOU WIN',1,(0,255,0))
+            window.blit(win,(200,200))
+            reload = True
+
+        display.update()
+
+    else:
+        score = 0
+        time.delay(3000)
+        reload = False
+
+
     time.delay(30)

@@ -33,7 +33,8 @@ class Bullet(GameSprite):
 
 class Enemy(GameSprite):
     def update(self):
-        self.rect.y += 5
+        self.speed = 0
+        self.rect.y += randint(1,10)
         if self.rect.y > 500:
             self.rect.y = 0
             self.rect.x = randint(0,600)
@@ -43,9 +44,12 @@ window = display.set_mode((700, 500))
 background = transform.scale(image.load('back.jpg'), (700, 500))
 
 ship = Player('hero.png', 5, 400, 100, 100)
-enemy = Enemy('ufo.png', 300, 0, 100, 100)
 
 bullets = sprite.Group()
+enemys = sprite.Group()
+for _ in range(5):
+    enemy = Enemy('ufo.png', randint(1,600), 0, 100, 100)
+    enemys.add(enemy)
 
 run = True 
 while run:
@@ -61,11 +65,11 @@ while run:
 
     ship.update()
     bullets.update()
-    enemy.update()
+    enemys.update()
 
     ship.reset()
-    enemy.reset()
     bullets.draw(window)
+    enemys.draw(window)
 
     display.update()
     time.delay(30)

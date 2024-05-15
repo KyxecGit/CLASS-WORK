@@ -33,11 +33,14 @@ class Bullet(GameSprite):
 
 class Enemy(GameSprite):
     def update(self):
+        global lost
+
         self.speed = 0
         self.rect.y += randint(1,10)
         if self.rect.y > 500:
             self.rect.y = 0
             self.rect.x = randint(0,600)
+            lost += 1
 
 
 window = display.set_mode((700, 500))
@@ -55,6 +58,7 @@ for _ in range(5):
 font.init()
 
 score = 0
+lost = 0
 
 run = True 
 reload = False
@@ -75,6 +79,9 @@ while run:
         score_text = font.Font(None,50).render('Счет: ' + str(score),1,(255,255,255))
         window.blit(score_text,(10,10))
 
+        score_text = font.Font(None,50).render('Пропущено: ' + str(lost),1,(255,255,255))
+        window.blit(score_text,(10,50))
+
         ship.reset()
         bullets.draw(window)
         enemys.draw(window)
@@ -93,12 +100,30 @@ while run:
             window.blit(win,(200,200))
             reload = True
 
+        if lost == 10:
+            lose = font.Font(None,100).render('YOU LOSE',1,(255,0,0))
+            window.blit(lose,(200,200))
+            reload = True
+
         display.update()
 
     else:
         score = 0
+        lost = 0
         time.delay(3000)
         reload = False
 
 
     time.delay(30)
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+from random import randint
 from pygame import *
 
 class GameSprite(sprite.Sprite):
@@ -18,22 +19,32 @@ class Player(GameSprite):
     def update(self):
         keys = key.get_pressed()
         if keys[K_LEFT] and self.rect.x > 5:
-            self.rect.x -= 5
+            self.rect.x -= 10
         if keys[K_RIGHT] and self.rect.x < 620:
-            self.rect.x += 5
+            self.rect.x += 10
 
     def fire(self):
-        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20)
+        bullet = Bullet('laser.png', self.rect.centerx, self.rect.top, 15, 20)
         bullets.add(bullet)
 
 class Bullet(GameSprite):
     def update(self):
         self.rect.y -= 5
 
-window = display.set_mode((700, 500))
-background = transform.scale(image.load('galaxy.jpg'), (700, 500))
+class Enemy(GameSprite):
+    def update(self):
+        self.rect.y += 5
+        if self.rect.y > 500:
+            self.rect.y = 0
+            self.rect.x = randint(0,600)
 
-ship = Player('rocket.png', 5, 400, 80, 100)
+
+window = display.set_mode((700, 500))
+background = transform.scale(image.load('back.jpg'), (700, 500))
+
+ship = Player('hero.png', 5, 400, 100, 100)
+enemy = Enemy('ufo.png', 300, 0, 100, 100)
+
 bullets = sprite.Group()
 
 run = True 
@@ -50,8 +61,11 @@ while run:
 
     ship.update()
     bullets.update()
+    enemy.update()
 
     ship.reset()
+    enemy.reset()
     bullets.draw(window)
 
     display.update()
+    time.delay(30)

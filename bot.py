@@ -6,7 +6,7 @@ print('3 - игра угадай число 4 - купить раба')
 
 otvet = input('Что вас интересует?').lower()
 
-while otvet != 'досвидос амиго':
+while otvet.find('дос') == -1:
 
     if otvet.find('шут') >= 0 :
         print('Колобок повесился')
@@ -25,7 +25,7 @@ while otvet != 'досвидос амиго':
         for popytka in range(10): 
 
             if otvet == rand_num:
-                print('Вы угадали! Приз пачка сухариков')
+                print('Приз пачка сухариков')
                 break
             else:
                 if otvet > rand_num:
@@ -35,8 +35,22 @@ while otvet != 'досвидос амиго':
 
             otvet = int(input('Попробуй еще раз'))
         print('Вы угадали с',popytka + 1,'попытки')
-
-
+    elif otvet.find('куп') >= 0:
+        print('Добро пожаловать в Черно-Шоп')
+        print('1 - Аркадий (100$) 2 - Виталя (200$) 3 - Лейкопластырь (1$)')
+        money = int(input('Сколько у вас деняк?'))
+        tovar = input('Что бы вы хотели приобрести?')
+        if tovar == '1' and money >= 100:
+            print('Вы купили Аркашу за 100 долларов')
+            print('У вас осталось', money - 100)
+        elif tovar == '2' and money >= 200:
+            print('Вы купили Виталика за 200 долларов')
+            print('У вас осталось', money - 200)
+        elif tovar == '3':
+            print('Вы купили лейкопластырь за бакс')
+            print('У вас осталось', money - 1)
+        else:
+            print('У вас недостаточно деняк')    
     else:
         print('Я тоби не понимаю')
 

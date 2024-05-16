@@ -7,3 +7,13 @@ while count < 3:
     count +=  1
 
 print('Скидки закончились.')
+
+
+#Подсчёт категорий товаров
+category = input('Категория (end - завершить):')
+count = 0
+while category != 'end':
+    category = input('Категория (end - завершить):')
+    count += 1
+
+print('Всего категорий товаров:', count)

@@ -14,6 +14,9 @@ gitler = transform.scale(gitler,(100,100))
 gitler_x = 0
 gitler_y = 0
 
+pica_x = 0
+pica_y = 0
+
 game = True
 while game:
 
@@ -31,9 +34,19 @@ while game:
     if keys[K_RIGHT]:
         gitler_x += 5
 
+    if pica_x < gitler_x:
+        pica_x += 1
+    else:
+        pica_x -= 1
+
+    if pica_y < gitler_y:
+        pica_y += 1
+    else:
+        pica_y -= 1
+
 
     window.blit(back,(0,0))
-    window.blit(pica,(200,200))
+    window.blit(pica,(pica_x,pica_y))
     window.blit(gitler,(gitler_x,gitler_y))
     display.update()
 

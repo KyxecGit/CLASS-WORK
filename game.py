@@ -1,129 +1,27 @@
-from random import randint
 from pygame import *
 
-class GameSprite(sprite.Sprite):
+window = display.set_mode((700,500))
 
-    def __init__(self, player_image, player_x, player_y, size_x, size_y):
-        super().__init__()
+back = image.load('back.png')
+back = transform.scale(back,(700,500))
 
-        self.image = transform.scale(image.load(player_image), (size_x, size_y))
-        self.rect = self.image.get_rect()
-        self.rect.x = player_x
-        self.rect.y = player_y
- 
-    def reset(self):
-        window.blit(self.image, (self.rect.x, self.rect.y))
+pica = image.load('pica.png')
+pica = transform.scale(pica,(100,100))
 
-class Player(GameSprite):
-
-    def update(self):
-        keys = key.get_pressed()
-        if keys[K_LEFT] and self.rect.x > 5:
-            self.rect.x -= 10
-        if keys[K_RIGHT] and self.rect.x < 620:
-            self.rect.x += 10
-
-    def fire(self):
-        bullet = Bullet('laser.png', self.rect.centerx, self.rect.top, 15, 20)
-        bullets.add(bullet)
-
-class Bullet(GameSprite):
-    def update(self):
-        self.rect.y -= 5
-
-class Enemy(GameSprite):
-    def update(self):
-        global lost
-
-        self.speed = 0
-        self.rect.y += randint(1,10)
-        if self.rect.y > 500:
-            self.rect.y = 0
-            self.rect.x = randint(0,600)
-            lost += 1
+gitler = image.load('gitler.png')
+gitler = transform.scale(gitler,(100,100))
 
 
-window = display.set_mode((700, 500))
-background = transform.scale(image.load('back.jpg'), (700, 500))
-
-ship = Player('hero.png', 5, 400, 100, 100)
-
-bullets = sprite.Group()
-enemys = sprite.Group()
-for _ in range(5):
-    enemy = Enemy('ufo.png', randint(1,600), 0, 100, 100)
-    enemys.add(enemy)
-
-#шрифт
-font.init()
-
-score = 0
-lost = 0
-
-run = True 
-reload = False
-
-while run:
+game = True
+while game:
 
     for e in event.get():
         if e.type == QUIT:
-            run = False
-        elif e.type == KEYDOWN:
-            if e.key == K_SPACE:
-                ship.fire()
+            game = False
 
-    if not reload:
+    window.blit(back,(0,0))
+    window.blit(pica,(200,200))
+    window.blit(gitler,(400,200))
+    display.update()
 
-        window.blit(background,(0,0))
-
-        score_text = font.Font(None,50).render('Счет: ' + str(score),1,(255,255,255))
-        window.blit(score_text,(10,10))
-
-        score_text = font.Font(None,50).render('Пропущено: ' + str(lost),1,(255,255,255))
-        window.blit(score_text,(10,50))
-
-        ship.reset()
-        bullets.draw(window)
-        enemys.draw(window)
-
-        ship.update()
-        bullets.update()
-        enemys.update()
-
-        if sprite.groupcollide(bullets, enemys, True,True):
-            enemy = Enemy('ufo.png', randint(1,600), 0, 100, 100)
-            enemys.add(enemy)
-            score += 1
-
-        if score == 10:
-            win = font.Font(None,100).render('YOU WIN',1,(0,255,0))
-            window.blit(win,(200,200))
-            reload = True
-
-        if lost == 10:
-            lose = font.Font(None,100).render('YOU LOSE',1,(255,0,0))
-            window.blit(lose,(200,200))
-            reload = True
-
-        display.update()
-
-    else:
-        score = 0
-        lost = 0
-        time.delay(3000)
-        reload = False
-
-
-    time.delay(30)
-
-
-
-
-
-
-
-
-
-
-
-
+    

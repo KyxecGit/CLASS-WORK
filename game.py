@@ -17,12 +17,15 @@ pica = GameSprite(0,200,80,150,'pica.png')
 window = display.set_mode((700,500))
 
 #музыка
-#mixer.init()
-#mixer.music.load('back.mp3')
-#mixer.music.play()
+mixer.init()
+mixer.music.load('back.mp3')
+mixer.music.play()
 #шрифт
 font.init()
 font = font.Font(None,50)
+
+win1 = font.render('Победил ПИКА ',1,(255,255,255))
+win2 = font.render('Победил АДОЛЬФ :',1,(255,255,255))
 
 speed_x = 1
 speed_y = 1

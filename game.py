@@ -17,9 +17,9 @@ pica = GameSprite(0,200,80,150,'pica.png')
 window = display.set_mode((700,500))
 
 #музыка
-#mixer.init()
-#mixer.music.load('back.mp3')
-#mixer.music.play()
+mixer.init()
+mixer.music.load('back.mp3')
+mixer.music.play()
 
 speed_x = 1
 speed_y = 1
@@ -46,6 +46,17 @@ while game:
 
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
+
+    x,y = mouse.get_pos()
+    pica.rect.y = y
+
+    if ball.rect.centery > gitler.rect.centery :
+        gitler.rect.y += 1
+    else:
+        gitler.rect.y -= 1
+
+    if gitler.rect.colliderect(ball) or pica.rect.colliderect(ball):
+        speed_x *= -1
 
     time.delay(10)
     display.update()

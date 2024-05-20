@@ -1,53 +1,28 @@
 from pygame import *
 
+class GameSprite():
+    def __init__(self,x,y,w,h,img):
+        self.image =  transform.scale(image.load(img),(w,h))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def show(self):
+        window.blit(self.image,(self.rect.x,self.rect.y))
+
 window = display.set_mode((700,500))
-
-back = image.load('back.png')
-back = transform.scale(back,(700,500))
-
-pica = image.load('pica.png')
-pica = transform.scale(pica,(100,100))
-
-gitler = image.load('gitler.png')
-gitler = transform.scale(gitler,(100,100))
-
-gitler_x = 0
-gitler_y = 0
-
-pica_x = 0
-pica_y = 0
+#музыка
+mixer.init()
+mixer.music.load('back.mp3')
+mixer.music.play()
 
 game = True
 while game:
+    
+    window.fill((200,255,255))
 
     for e in event.get():
         if e.type == QUIT:
             game = False
 
-    keys = key.get_pressed()
-    if keys[K_UP]:
-        gitler_y -= 5
-    if keys[K_DOWN]:
-        gitler_y += 5
-    if keys[K_LEFT]:
-        gitler_x -= 5
-    if keys[K_RIGHT]:
-        gitler_x += 5
-
-    if pica_x < gitler_x:
-        pica_x += 1
-    else:
-        pica_x -= 1
-
-    if pica_y < gitler_y:
-        pica_y += 1
-    else:
-        pica_y -= 1
-
-
-    window.blit(back,(0,0))
-    window.blit(pica,(pica_x,pica_y))
-    window.blit(gitler,(gitler_x,gitler_y))
     display.update()
-
-    

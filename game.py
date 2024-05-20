@@ -43,19 +43,29 @@ while game:
     gitler.show()
     pica.show()
 
+
     pica_score = font.render('Счет: '+ str(score1),1,(255,255,255))
     gitler_score = font.render('Счет :'+ str(score2),1,(255,255,255))
 
+    
     window.blit(pica_score,(20,20))
     window.blit(pica_score,(550,20))
-
 
 
     ball.rect.x += speed_x
     ball.rect.y += speed_y
 
-    if ball.rect.x > 650 or ball.rect.x < 0:
-        speed_x *= -1
+    if ball.rect.x >= 650:
+        score1 += 1
+        ball.rect.x = 350
+        ball.rect.y = 200
+        time.delay(1000)
+       
+    if ball.rect.x <= 0:
+        score2 += 1
+        ball.rect.x = 350
+        ball.rect.y = 200
+        time.delay(1000)
 
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
@@ -71,5 +81,5 @@ while game:
     if gitler.rect.colliderect(ball) or pica.rect.colliderect(ball):
         speed_x *= -1
 
-    time.delay(10)
+    time.delay(3)
     display.update()

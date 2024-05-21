@@ -16,3 +16,23 @@ for i in range(amount):
     print('Рекомендация:', res)
     if res == 'астрономия':
         print('Будьте внимательны! Занятия проходят ночью!')
+
+
+
+
+
+
+
+def check_test(score):
+    if score > 50:
+        return True
+    else:
+        return False
+
+amount = int(input('Число учеников:'))
+for i in range(amount):
+    score = int(input('Введите балл:'))
+    res = check_test(score) 
+    print('Допуск:', res)
+    if res == False:
+        print('Займитесь чтением! Отличные книги: Три толстяка, Дон Кихот и Робинзон Крузо')

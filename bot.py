@@ -35,7 +35,6 @@ layout_card = QVBoxLayout()
 
 layout_card.addWidget(lb_Question)
 layout_card.addWidget(RadioGroupBox)
-layout_card.addWidget(AnsGroupBox)
 layout_card.addWidget(btn_OK)
 #ФУНКЦИОНАЛ
 

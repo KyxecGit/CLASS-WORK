@@ -29,16 +29,6 @@ layout_ans2.addWidget(rbtn_4)
 RadioGroupBox.setLayout(layout_ans2) # готова "панель" с вариантами ответов 
 
 #ФОРМА С РЕЗУЛЬТАТОМ
-AnsGroupBox = QGroupBox("Результат теста")
-lb_Result = QLabel('прав ты или нет?') # здесь размещается надпись "правильно" или "неправильно"
-lb_Correct = QLabel('ответ будет тут!') # здесь будет написан текст правильного ответа
-
-layout_res = QVBoxLayout()
-layout_res.addWidget(lb_Result)
-layout_res.addWidget(lb_Correct)
-AnsGroupBox.setLayout(layout_res)
-
-AnsGroupBox.hide() # скроем панель с ответом, сначала должна быть видна панель вопросов
 
 #РАЗМЕЩЕНИЕ ВИДЖЕТОВ
 layout_card = QVBoxLayout()

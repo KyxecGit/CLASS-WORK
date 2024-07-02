@@ -1,46 +1,15 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-        QApplication, QWidget, QVBoxLayout, 
-        QGroupBox, QRadioButton,  
-        QPushButton, QLabel)
+from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from random import randint
 
-#ИНТЕРФЕЙС
-app = QApplication([])
-window = QWidget()
-window.setWindowTitle('Memo Card')
-window.resize(400, 300)
 
-btn_OK = QPushButton('Ответить') # кнопка ответа
-lb_Question = QLabel('Самый сложный вопрос в мире!') # текст вопроса
-#ФОРМА С ВАРИАНТАМИ ОТВЕТОВ
-RadioGroupBox = QGroupBox("Варианты ответов") # группа на экране для переключателей с ответами
+def main():
+    application = Application.builder().token("7249287527:AAGf5G97partpBxokwnvW2cjXboxF4_mUMc").build()
 
-rbtn_1 = QRadioButton('Вариант 1')
-rbtn_2 = QRadioButton('Вариант 2')
-rbtn_3 = QRadioButton('Вариант 3')
-rbtn_4 = QRadioButton('Вариант 4')
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-layout_ans2 = QVBoxLayout() # вертикальные будут внутри горизонтального
-layout_ans2.addWidget(rbtn_1) # два ответа в первый столбец
-layout_ans2.addWidget(rbtn_2)
-layout_ans2.addWidget(rbtn_3) # два ответа во второй столбец
-layout_ans2.addWidget(rbtn_4)
+    application.run_polling()
 
-RadioGroupBox.setLayout(layout_ans2) # готова "панель" с вариантами ответов 
 
-#ФОРМА С РЕЗУЛЬТАТОМ
-
-#РАЗМЕЩЕНИЕ ВИДЖЕТОВ
-layout_card = QVBoxLayout()
-
-layout_card.addWidget(lb_Question)
-layout_card.addWidget(RadioGroupBox)
-layout_card.addWidget(btn_OK)
-#ФУНКЦИОНАЛ
-
-#ПОДПИСКИ
-
-#ЗАПУСК
-window.setLayout(layout_card)
-window.show()
-app.exec()
+main()
